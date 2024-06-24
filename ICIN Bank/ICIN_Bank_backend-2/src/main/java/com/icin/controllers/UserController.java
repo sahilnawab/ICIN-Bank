@@ -23,23 +23,7 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-
-	@PostMapping("/register")
-	public ResponseEntity<User> Register(@RequestBody User user) 
-	{
-		User user1=service.register(user);
-		ResponseEntity<User> response=new ResponseEntity<User>(user1,HttpStatus.CREATED) ;		
-			
-		return response;
-	}
 	
-//	@GetMapping("/getbalance/get/{eno}")
-//	public ResponseEntity<Double> getBalance( String password) {
-//		double d=service.getBalance(password);
-//		ResponseEntity<Double> response=new ResponseEntity<Double>(d,HttpStatus.OK);
-//		return response;
-//
-//	}
 	@GetMapping("/alluser")
 	public ResponseEntity<List<User>> getAll(){
 		List<User> list = service.getAll();
@@ -58,4 +42,4 @@ public class UserController {
 	}
 	
 	}
-
+  
