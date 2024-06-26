@@ -9,19 +9,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.icin.entity.Role;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {	
 		http.csrf(t ->t.disable());
 			http.authorizeHttpRequests(request ->request
-					.requestMatchers("/api/auth/**")
-					.permitAll()
-					.anyRequest()
-					.authenticated())
+				.requestMatchers("/api/auth/**")
+				.permitAll()
+				.requestMatchers("/api/admin/**").hasAnyRole("ADMIN")
+				.requestMatchers("/api/user/**").hasAnyRole("CUSTOMER")
+				.anyRequest()
+				.authenticated())
 			.httpBasic(Customizer.withDefaults())
 			.formLogin(Customizer.withDefaults());
 		return http.build();
@@ -31,5 +34,4 @@ public class SecurityConfig {
 	public PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
 }

@@ -9,9 +9,19 @@ public class UserModel {
 	private String lastName;
 	private String email;
 	private String phone;
-	private String password;
 	private int age;
 	
+	
+	
+	public UserModel(String firstName, String lastName, String email, String phone, int age) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phone = phone;
+		this.age = age;
+	}
+
 	public UserModel() {
 		// TODO Auto-generated constructor stub
 	}
@@ -46,14 +56,6 @@ public class UserModel {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public int getAge() {
