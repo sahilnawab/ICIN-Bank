@@ -1,16 +1,16 @@
 package com.icin.auth;
 
+
+import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.icin.entity.AccountDetails;
 import com.icin.entity.Role;
 import com.icin.entity.User;
 import com.icin.repos.RegistrationResponseRepo;
 import com.icin.repos.UserRepo;
+
 
 @Service
 public class AuthenticationService {
@@ -36,17 +36,25 @@ public class AuthenticationService {
 		newUser.setPhone(user.getPhone());
 		newUser.setRole(Role.ROLE_CUSTOMER);
 		newUser.setPassword(encoder.encode(user.getPassword()));
-		userRepo.save(newUser);
+		AccountDetails accountDetails=new AccountDetails();
+		accountDetails.setAccountNumber(user.getAccountNumber());
+		accountDetails.setBalance(user.getBalance());
+		accountDetails.setIFSC(user.getIFSC());
+		accountDetails.setUser(newUser);
+		newUser.setAccountDetails(accountDetails);
 		RegistrationResponse response = new RegistrationResponse();
+		if(userRepo.save(newUser)!=null) {
 		response.setMessage("Registration Sucssesfull");
 		return responseRepo.save(response);
-
+		}
+		else {
+			//TO DO _ BETTER EXCEPTION HANDLING
+			response.setMessage("Something went wrong");
+			return response;
+		}
 	}
 
-//	public String authenticate(LoginRequest loginRequest) {
-//		Authentication authenticate = authenticationManager.authenticate(
-//				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-//	
-//	
-//	}
+	public String throwException() {
+		throw new IllegalStateException("Something Went Wrong");
+	}
 }

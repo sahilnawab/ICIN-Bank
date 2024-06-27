@@ -3,6 +3,7 @@ package com.icin.auth;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 public class RegistrationRequest {
 
@@ -24,6 +25,12 @@ public class RegistrationRequest {
 
 //	@NotBlank(message = "age should not be blank")
 	private int age;
+	
+	private long accountNumber;
+	
+	private String IFSC;
+	
+	private double balance;
 
 	public String getFirstName() {
 		return firstName;
@@ -90,6 +97,30 @@ public class RegistrationRequest {
 		this.phone = phone;
 		this.password = password;
 		this.age = age;
+	}
+
+	public long getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(long accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
+	public String getIFSC() {
+		return IFSC;
+	}
+
+	public void setIFSC(String iFSC) {
+		IFSC = iFSC;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 	
 	
